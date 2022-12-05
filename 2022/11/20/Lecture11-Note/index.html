@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Lecture11-Note | Big John</title><meta name="keywords" content="usc dsci 549"><meta name="author" content="John Wen,yuehanwe@usc.edu"><meta name="copyright" content="John Wen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Parallel Processing Algorithmic Complexity  Linear complexity Polynomial complexity exponential complexity  Processing Data with a Divide-and-Conquer Strategy  A Divide-and-Conquer Strategy  Requires">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lecture11-Note">
+<meta property="og:url" content="https://superjohnwen.github.io/2022/11/20/Lecture11-Note/index.html">
+<meta property="og:site_name" content="Big John">
+<meta property="og:description" content="Parallel Processing Algorithmic Complexity  Linear complexity Polynomial complexity exponential complexity  Processing Data with a Divide-and-Conquer Strategy  A Divide-and-Conquer Strategy  Requires">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png">
+<meta property="article:published_time" content="2022-11-20T10:19:31.000Z">
+<meta property="article:modified_time" content="2022-12-04T04:02:22.736Z">
+<meta property="article:author" content="John Wen">
+<meta property="article:tag" content="usc dsci 549">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://superjohnwen.github.io/2022/11/20/Lecture11-Note/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":450},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Lecture11-Note',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-03 20:02:22'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/duck.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Life</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><span> Diary</span></a></li><li><a class="site-page child" href="/photo/"><span> Photo</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/About/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Big John</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Life</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><span> Diary</span></a></li><li><a class="site-page child" href="/photo/"><span> Photo</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/About/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Lecture11-Note</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-11-20T10:19:31.000Z" title="Created 2022-11-20 02:19:31">2022-11-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-12-04T04:02:22.736Z" title="Updated 2022-12-03 20:02:22">2022-12-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/dsci-549/">dsci 549</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Lecture11-Note"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><font size="4">
+<h1 id="parallel-processing">Parallel Processing</h1>
+<h2 id="algorithmic-complexity">Algorithmic Complexity</h2>
+<ul>
+<li>Linear complexity</li>
+<li>Polynomial complexity</li>
+<li>exponential complexity</li>
+</ul>
+<h2 id="processing-data-with-a-divide-and-conquer-strategy">Processing Data with a Divide-and-Conquer Strategy</h2>
+<ul>
+<li>A Divide-and-Conquer Strategy
+<ul>
+<li>Requires that each piece is <strong>independent</strong> of the others</li>
+</ul>
+</li>
+</ul>
+<img src="/2022/11/20/Lecture11-Note/divide.png">
+<h2 id="speedup-with-parallel-processing">Speedup with Parallel Processing</h2>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mfrac><mrow><mi>T</mi><mi>i</mi><mi>m</mi><mi>e</mi><mi>S</mi><mi>e</mi><mi>q</mi><mi>u</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>a</mi><mi>l</mi></mrow><mrow><mi>T</mi><mi>i</mi><mi>m</mi><mi>e</mi><mi>P</mi><mi>a</mi><mi>r</mi><mi>a</mi><mi>l</mi><mi>l</mi><mi>e</mi><mi>l</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">S = \frac{TimeSequential}{TimeParallel}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.0574399999999997em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714399999999998em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">i</span><span class="mord mathdefault">m</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault">u</span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<h2 id="critical-path">Critical Path</h2>
+<ul>
+<li>A critical path in a computation consists of consecutive steps that are interdependent and therefore not parallelizable</li>
+</ul>
+<h2 id="amdahl-s-law">Amdahl’s Law</h2>
+<ul>
+<li>The theoretical sppedup in the execution of a task( where p is the proportion of the task that is parallelizable) =  <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mrow><mn>1</mn><mo>−</mo><mi>p</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{1-p}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.326216em;vertical-align:-0.481108em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.845108em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight">p</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></li>
+</ul>
+<img src="/2022/11/20/Lecture11-Note/laww.png">
+<h2 id="embarrassingly-parallel-computations">Embarrassingly Parallel Computations</h2>
+<ul>
+<li>Embarrassingly parallel tasks are cleanly separable and can be carried out in parallel, typically with significant speedups</li>
+</ul>
+<h1 id="distributed-computing-platforms">Distributed Computing Platforms</h1>
+<h2 id="multi-core-computing">Multi-Core Computing</h2>
+<ul>
+<li>Several processors in the same computer
+<ul>
+<li>Sharing memory</li>
+<li>Distributed Memory</li>
+<li>Mixed-Memory architecture</li>
+</ul>
+</li>
+</ul>
+<img src="/2022/11/20/Lecture11-Note/sharing m.png">
+<img src="/2022/11/20/Lecture11-Note/distributed.png">
+<img src="/2022/11/20/Lecture11-Note/mixed.png">
+<h2 id="graphical-processing-units-gpus">Graphical Processing Units (GPUs)</h2>
+<ul>
+<li>Graphical processing units are designed to do simple computation to display graphics and are very cheap
+<ul>
+<li>They turn out yo be very useful to do simple computations in parallel</li>
+</ul>
+</li>
+</ul>
+<h2 id="distributed-computing">Distributed Computing</h2>
+<ul>
+<li>A parallel computing paradigm where individual cores do computations that re orchestrated over a <strong>network</strong></li>
+</ul>
+<h3 id="different-ways-of-distributed-computing">Different Ways of Distributed Computing</h3>
+<h4 id="web-services">Web Services</h4>
+<ul>
+<li>An approach to distributed computing where third parties offer services for remote execution that can be orchestrated to create complex applications</li>
+<li></li>
+</ul>
+<img src="/2022/11/20/Lecture11-Note/web service.png">
+<h4 id="grid-computing">Grid Computing</h4>
+<ul>
+<li>An approach to distributed computing where the computing power of several computers of <strong>different nature</strong> are orchestrated through a central “middleware” control center</li>
+</ul>
+<img src="/2022/11/20/Lecture11-Note/grid computing.png">
+<h4 id="cluster-computing">Cluster Computing</h4>
+<ul>
+<li>An approach to distributed computing where the precessing power of several computers of <strong>very similar nature</strong> is orchestrated through a central head node<br>
+<img src="/2022/11/20/Lecture11-Note/cluster.png"></li>
+</ul>
+<h4 id="cloud-computing-considerations">Cloud Computing Considerations</h4>
+<ul>
+<li>Positives:
+<ul>
+<li>No need to purchase computers</li>
+<li>No need for space</li>
+<li>No need to manage computer hardware or software</li>
+</ul>
+</li>
+<li>Negatives
+<ul>
+<li>Cost of replicating execution environment</li>
+<li>Cost of moving data to the cloud in order to be processed</li>
+</ul>
+</li>
+</ul>
+<h4 id="virtual-machines">Virtual Machines</h4>
+<ul>
+<li>Virtual machines are frozen versions of all the software in a machine that is needed to run an application, including OS, programming language support, libraries, etc.</li>
+</ul>
+<h3 id="practical-aspects-of-distributing-computing">Practical Aspects of Distributing Computing</h3>
+<ul>
+<li>Execution Failures</li>
+<li>Cooling</li>
+<li>Network Delays</li>
+<li>Queuing Delays</li>
+</ul>
+<h3 id="programming-languages-for-distributed-computing">Programming Languages for Distributed Computing</h3>
+<ul>
+<li>MapReduce and Hadoop make it possible that many programming languages can be used to give special instructions to use multiple processing and memory units</li>
+<li></li>
+</ul>
+</font></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://superjohnwen.github.io">John Wen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://superjohnwen.github.io/2022/11/20/Lecture11-Note/">https://superjohnwen.github.io/2022/11/20/Lecture11-Note/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/usc-dsci-549/">usc dsci 549</a></div><div class="post_share"><div class="social-share" data-image="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/28/SSCI-581-Week11/"><img class="prev-cover" src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/ssci581.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">SSCI-581-Week11</div></div></a></div><div class="next-post pull-right"><a href="/2022/11/12/SSCI-581-Week10/"><img class="next-cover" src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/ssci581.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">SSCI-581-Week10</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/11/06/Lecture10-Note/" title="Lecture10-Note"><img class="cover" src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-06</div><div class="title">Lecture10-Note</div></div></a></div><div><a href="/2022/12/03/Lecture12-Note/" title="Lecture12-Note"><img class="cover" src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-03</div><div class="title">Lecture12-Note</div></div></a></div><div><a href="/2022/09/13/Lecture2-Note/" title="Lecture2 Note"><img class="cover" src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-13</div><div class="title">Lecture2 Note</div></div></a></div><div><a href="/2022/09/15/Lecture3-Note/" title="Lecture4-Note"><img class="cover" src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-15</div><div class="title">Lecture4-Note</div></div></a></div><div><a href="/2022/10/15/Lecture7-Note/" title="Lecture7-Note"><img class="cover" src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-15</div><div class="title">Lecture7-Note</div></div></a></div><div><a href="/2022/10/04/Lecture6-Note/" title="Lecture6-Note"><img class="cover" src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-04</div><div class="title">Lecture6-Note</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/duck.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">John Wen</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">24</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">4</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">4</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#parallel-processing"><span class="toc-number">1.</span> <span class="toc-text">Parallel Processing</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#algorithmic-complexity"><span class="toc-number">1.1.</span> <span class="toc-text">Algorithmic Complexity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#processing-data-with-a-divide-and-conquer-strategy"><span class="toc-number">1.2.</span> <span class="toc-text">Processing Data with a Divide-and-Conquer Strategy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#speedup-with-parallel-processing"><span class="toc-number">1.3.</span> <span class="toc-text">Speedup with Parallel Processing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#critical-path"><span class="toc-number">1.4.</span> <span class="toc-text">Critical Path</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#amdahl-s-law"><span class="toc-number">1.5.</span> <span class="toc-text">Amdahl’s Law</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#embarrassingly-parallel-computations"><span class="toc-number">1.6.</span> <span class="toc-text">Embarrassingly Parallel Computations</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#distributed-computing-platforms"><span class="toc-number">2.</span> <span class="toc-text">Distributed Computing Platforms</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#multi-core-computing"><span class="toc-number">2.1.</span> <span class="toc-text">Multi-Core Computing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#graphical-processing-units-gpus"><span class="toc-number">2.2.</span> <span class="toc-text">Graphical Processing Units (GPUs)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#distributed-computing"><span class="toc-number">2.3.</span> <span class="toc-text">Distributed Computing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#different-ways-of-distributed-computing"><span class="toc-number">2.3.1.</span> <span class="toc-text">Different Ways of Distributed Computing</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#web-services"><span class="toc-number">2.3.1.1.</span> <span class="toc-text">Web Services</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#grid-computing"><span class="toc-number">2.3.1.2.</span> <span class="toc-text">Grid Computing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cluster-computing"><span class="toc-number">2.3.1.3.</span> <span class="toc-text">Cluster Computing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cloud-computing-considerations"><span class="toc-number">2.3.1.4.</span> <span class="toc-text">Cloud Computing Considerations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#virtual-machines"><span class="toc-number">2.3.1.5.</span> <span class="toc-text">Virtual Machines</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#practical-aspects-of-distributing-computing"><span class="toc-number">2.3.2.</span> <span class="toc-text">Practical Aspects of Distributing Computing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#programming-languages-for-distributed-computing"><span class="toc-number">2.3.3.</span> <span class="toc-text">Programming Languages for Distributed Computing</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/03/Lecture12-Note/" title="Lecture12-Note"><img src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lecture12-Note"/></a><div class="content"><a class="title" href="/2022/12/03/Lecture12-Note/" title="Lecture12-Note">Lecture12-Note</a><time datetime="2022-12-04T04:02:56.000Z" title="Created 2022-12-03 20:02:56">2022-12-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/30/SSCI-581-Week12/" title="SSCI-581-Week12"><img src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/ssci581.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SSCI-581-Week12"/></a><div class="content"><a class="title" href="/2022/11/30/SSCI-581-Week12/" title="SSCI-581-Week12">SSCI-581-Week12</a><time datetime="2022-11-30T22:51:46.000Z" title="Created 2022-11-30 14:51:46">2022-11-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/28/SSCI-581-Week11/" title="SSCI-581-Week11"><img src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/ssci581.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SSCI-581-Week11"/></a><div class="content"><a class="title" href="/2022/11/28/SSCI-581-Week11/" title="SSCI-581-Week11">SSCI-581-Week11</a><time datetime="2022-11-28T22:51:42.000Z" title="Created 2022-11-28 14:51:42">2022-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/20/Lecture11-Note/" title="Lecture11-Note"><img src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/dsci549.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Lecture11-Note"/></a><div class="content"><a class="title" href="/2022/11/20/Lecture11-Note/" title="Lecture11-Note">Lecture11-Note</a><time datetime="2022-11-20T10:19:31.000Z" title="Created 2022-11-20 02:19:31">2022-11-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/12/SSCI-581-Week10/" title="SSCI-581-Week10"><img src="https://raw.githubusercontent.com/SuperJohnWen/SuperJohnWen.github.io/master/img/ssci581.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SSCI-581-Week10"/></a><div class="content"><a class="title" href="/2022/11/12/SSCI-581-Week10/" title="SSCI-581-Week10">SSCI-581-Week10</a><time datetime="2022-11-13T05:35:30.907Z" title="Created 2022-11-12 21:35:30">2022-11-12</time></div></div></div></div></div></div></main><footer id="footer" style="background: rgba(255,255,255,0)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By John Wen</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="Chat"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://my-twikoo-git-main-superjohnwen.vercel.app/',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://my-twikoo-git-main-superjohnwen.vercel.app/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
