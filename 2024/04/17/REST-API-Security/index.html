@@ -1,0 +1,256 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>REST API Security | Big John</title><meta name="keywords" content="SpringBoot"><meta name="author" content="John Wen,yuehanwe@usc.edu"><meta name="copyright" content="John Wen"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Spring Security 配置关于安全方面的设置，用@Configuration注解来注册一个security设置： 1234@Configurationpublic class DemoSecurityConfig &amp;#123;    &#x2F;&#x2F; 添加你的安全设置&amp;#125; Spring Security Password Storage 在spring security中，密码可以用不同的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="REST API Security">
+<meta property="og:url" content="https://superjohnwen.github.io/2024/04/17/REST-API-Security/index.html">
+<meta property="og:site_name" content="Big John">
+<meta property="og:description" content="Spring Security 配置关于安全方面的设置，用@Configuration注解来注册一个security设置： 1234@Configurationpublic class DemoSecurityConfig &amp;#123;    &#x2F;&#x2F; 添加你的安全设置&amp;#125; Spring Security Password Storage 在spring security中，密码可以用不同的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png">
+<meta property="article:published_time" content="2024-04-17T23:22:56.000Z">
+<meta property="article:modified_time" content="2024-04-18T09:02:14.539Z">
+<meta property="article:author" content="John Wen">
+<meta property="article:tag" content="SpringBoot">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://superjohnwen.github.io/2024/04/17/REST-API-Security/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":450},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"Traditional Chinese Activated Manually","cht_to_chs":"Simplified Chinese Activated Manually","day_to_night":"Dark Mode Activated Manually","night_to_day":"Light Mode Activated Manually","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'REST API Security',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-18 02:02:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"><link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">Loading...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/duck.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Life</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><span> Diary</span></a></li><li><a class="site-page child" href="/photo/"><span> Photo</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/About/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Big John</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> Life</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/diary/"><span> Diary</span></a></li><li><a class="site-page child" href="/photo/"><span> Photo</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/About/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">REST API Security</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-04-17T23:22:56.000Z" title="Created 2024-04-17 16:22:56">2024-04-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-04-18T09:02:14.539Z" title="Updated 2024-04-18 02:02:14">2024-04-18</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="REST API Security"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><font size="4">
+<h2 id="spring-security">Spring Security</h2>
+<p>配置关于安全方面的设置，用<code>@Configuration</code>注解来注册一个security设置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoSecurityConfig</span> &#123;</span><br><span class="line">    <span class="comment">// 添加你的安全设置</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="spring-security-password-storage">Spring Security Password Storage</h2>
+<p>在spring security中，密码可以用不同的方式存储：</p>
+<p>id代表使用的加密算法， <code>noop</code>表示 &quot;no operation&quot;即保存纯文本密码，不适用加密算法。</p>
+<img src="/2024/04/17/REST-API-Security/1.jpg">
+<h3 id="在内存中保存用户-密码和角色">在内存中保存用户、密码和角色</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">DemoSecurityConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> InMemoryUserDetailManager <span class="title function_">userDetailsManager</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">UserDetails</span> <span class="variable">john</span> <span class="operator">=</span> User.bulider()</span><br><span class="line">                                .username(<span class="string">&quot;john&quot;</span>)</span><br><span class="line">                                .password(<span class="string">&quot;&#123;noop&#125;test123&quot;</span>)</span><br><span class="line">                                .roles(<span class="string">&quot;EMPLOYEE&quot;</span>)</span><br><span class="line">                                .build();</span><br><span class="line"></span><br><span class="line">        <span class="type">UserDetails</span> <span class="variable">mary</span> <span class="operator">=</span> User.bulider()</span><br><span class="line">                                .username(<span class="string">&quot;john&quot;</span>)</span><br><span class="line">                                .password(<span class="string">&quot;&#123;noop&#125;test123&quot;</span>)</span><br><span class="line">                                .roles(<span class="string">&quot;EMPLOYEE&quot;</span>,<span class="string">&quot;MANAGER&quot;</span>)</span><br><span class="line">                                .build();</span><br><span class="line"></span><br><span class="line">        <span class="type">UserDetails</span> <span class="variable">susan</span> <span class="operator">=</span> User.bulider()</span><br><span class="line">                                .username(<span class="string">&quot;john&quot;</span>)</span><br><span class="line">                                .password(<span class="string">&quot;&#123;noop&#125;test123&quot;</span>)</span><br><span class="line">                                .roles(<span class="string">&quot;EMPLOYEE&quot;</span>,<span class="string">&quot;MANAGER&quot;</span>,<span class="string">&quot;ADMIN&quot;</span>)</span><br><span class="line">                                .build();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">InMemoryUserDetailsManager</span>(john, mary, susan);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="为不同的端点设置可查看的角色">为不同的端点设置可查看的角色</h3>
+<p>我们可以根据roles去开发对应的API端点， 例如：</p>
+<img src="/2024/04/17/REST-API-Security/2.jpg">
+<p>添加一个角色的语句：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">requestMatchers(&lt;&lt;添加HTTP方法&gt;&gt;, &lt;&lt;添加路径&gt;&gt;)</span><br><span class="line">        .hasRole(&lt;&lt;添加角色&gt;&gt;)</span><br></pre></td></tr></table></figure>
+<p>添加多个角色的语句：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">requestMatchers(&lt;&lt;添加HTTP方法&gt;&gt;, &lt;&lt;添加路径&gt;&gt;)</span><br><span class="line">        .hasAnyRole(&lt;&lt;添加角色list&gt;&gt;)</span><br></pre></td></tr></table></figure>
+<p>具体的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">requestMatchers(HttpMethod.GET, <span class="string">&quot;/api/employees&quot;</span>).hasRole(<span class="string">&quot;EMPLOYEE&quot;</span>)</span><br><span class="line"></span><br><span class="line">requestMatchers(HttpMethod.GET, <span class="string">&quot;/api/employees/**&quot;</span>).hasRole(<span class="string">&quot;EMPLOYEE)</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+<p>在代码中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> SecurityFilterChain <span class="title function_">filterChain</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    http.authorizeHttpRequests(configurer -&gt; </span><br><span class="line">                    configurer</span><br><span class="line">                        .requestMatchers(HttpMethod.GET, <span class="string">&quot;/api/employees&quot;</span>).hasRole(<span class="string">&quot;EMPLOYEE&quot;</span>)</span><br><span class="line">                        ......</span><br><span class="line">                    );</span><br><span class="line">    http.httpBasic(Customizer.withDefaults());</span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果构建非页面的rest api，组需要禁掉CSRF保护</span></span><br><span class="line">    http.csrf(csrf -&gt; csrf.disable());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> http.build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="用数据库存储用户-密码和授权">用数据库存储用户、密码和授权</h3>
+<p>Spring Security有默认固定的表名和列名，但是也是可以自定义修改的：</p>
+<img src="/2024/04/17/REST-API-Security/3.jpg">
+<p>再代码中使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> UserDetailsManager <span class="title function_">userDetailManager</span><span class="params">(Datasource dataSource)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">JdbcUserDetailsManager</span>(dataSource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改默认的表名和列名，使用自定义的表名和列名：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> UserDetailsManager <span class="title function_">userDetailsManager</span><span class="params">(DataSource dataSource)</span> &#123;</span><br><span class="line">    <span class="type">JdbcUserDetailsManager</span> <span class="variable">jdbcUserDetailsManager</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JdbcUserDetailsManager</span>(dataSource);</span><br><span class="line"></span><br><span class="line">    jdbcUserDetailsManager.setUsersByUsernameQuery(</span><br><span class="line">        <span class="string">&quot;select user_id, pw, active from members where user_id=?&quot;</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    jdbcUserDetailsManager.setAuthoritiesByUsernameQuery(</span><br><span class="line">        <span class="string">&quot;select user_id, roles from roles where user_id=?&quot;</span></span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> jdbcUserDetailsManager;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</font></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="https://superjohnwen.github.io">John Wen</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://superjohnwen.github.io/2024/04/17/REST-API-Security/">https://superjohnwen.github.io/2024/04/17/REST-API-Security/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/SpringBoot/">SpringBoot</a></div><div class="post_share"><div class="social-share" data-image="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/04/15/REST-CRUD-APIs/"><img class="next-cover" src="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">REST CRUD APIs</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/04/14/Hibernate-JPA/" title="Hibernate &#x2F; JPA"><img class="cover" src="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-14</div><div class="title">Hibernate &#x2F; JPA</div></div></a></div><div><a href="/2024/04/15/REST-CRUD-APIs/" title="REST CRUD APIs"><img class="cover" src="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-15</div><div class="title">REST CRUD APIs</div></div></a></div><div><a href="/2023/10/13/SpringBoot/" title="SpringBoot"><img class="cover" src="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-13</div><div class="title">SpringBoot</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/duck.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">John Wen</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">51</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-security"><span class="toc-number">1.</span> <span class="toc-text">Spring Security</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spring-security-password-storage"><span class="toc-number">2.</span> <span class="toc-text">Spring Security Password Storage</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E4%BF%9D%E5%AD%98%E7%94%A8%E6%88%B7-%E5%AF%86%E7%A0%81%E5%92%8C%E8%A7%92%E8%89%B2"><span class="toc-number">2.1.</span> <span class="toc-text">在内存中保存用户、密码和角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%B8%8D%E5%90%8C%E7%9A%84%E7%AB%AF%E7%82%B9%E8%AE%BE%E7%BD%AE%E5%8F%AF%E6%9F%A5%E7%9C%8B%E7%9A%84%E8%A7%92%E8%89%B2"><span class="toc-number">2.2.</span> <span class="toc-text">为不同的端点设置可查看的角色</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%98%E5%82%A8%E7%94%A8%E6%88%B7-%E5%AF%86%E7%A0%81%E5%92%8C%E6%8E%88%E6%9D%83"><span class="toc-number">2.3.</span> <span class="toc-text">用数据库存储用户、密码和授权</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/04/17/REST-API-Security/" title="REST API Security"><img src="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="REST API Security"/></a><div class="content"><a class="title" href="/2024/04/17/REST-API-Security/" title="REST API Security">REST API Security</a><time datetime="2024-04-17T23:22:56.000Z" title="Created 2024-04-17 16:22:56">2024-04-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/15/REST-CRUD-APIs/" title="REST CRUD APIs"><img src="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="REST CRUD APIs"/></a><div class="content"><a class="title" href="/2024/04/15/REST-CRUD-APIs/" title="REST CRUD APIs">REST CRUD APIs</a><time datetime="2024-04-15T23:51:23.000Z" title="Created 2024-04-15 16:51:23">2024-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/04/14/Hibernate-JPA/" title="Hibernate / JPA"><img src="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hibernate / JPA"/></a><div class="content"><a class="title" href="/2024/04/14/Hibernate-JPA/" title="Hibernate / JPA">Hibernate / JPA</a><time datetime="2024-04-14T23:03:57.000Z" title="Created 2024-04-14 16:03:57">2024-04-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/29/mysql/" title="mysql"><img src="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="mysql"/></a><div class="content"><a class="title" href="/2023/10/29/mysql/" title="mysql">mysql</a><time datetime="2023-10-30T02:37:12.000Z" title="Created 2023-10-29 19:37:12">2023-10-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/10/19/%E9%9D%A2%E8%AF%95%E5%9B%9E%E9%A1%BE%E5%92%8C%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" title="面试回顾和知识点总结"><img src="https://fastly.jsdelivr.net/gh/jerryc127/CDN@latest/cover/default_bg.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="面试回顾和知识点总结"/></a><div class="content"><a class="title" href="/2023/10/19/%E9%9D%A2%E8%AF%95%E5%9B%9E%E9%A1%BE%E5%92%8C%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/" title="面试回顾和知识点总结">面试回顾和知识点总结</a><time datetime="2023-10-20T04:29:55.000Z" title="Created 2023-10-19 21:29:55">2023-10-19</time></div></div></div></div></div></div></main><footer id="footer" style="background: rgba(255,255,255,0)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By John Wen</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="Chat"><i class="fas fa-sms"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://my-twikoo-git-main-superjohnwen.vercel.app/',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://my-twikoo-git-main-superjohnwen.vercel.app/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.innerText = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
